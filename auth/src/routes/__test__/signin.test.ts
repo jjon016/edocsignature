@@ -16,15 +16,16 @@ it('returns a 400 when an incorrect password is supplied', async () => {
   await request(app)
     .post('/api/users/signup')
     .send({
-      email: 'valid@test.com',
-      password: 'password',
+      email: 'test@test.com',
+      password: 'testpassword',
+      name: 'Test User',
     })
     .expect(201);
   await request(app)
     .post('/api/users/signin')
     .send({
-      email: 'valid@test.com',
-      password: 'paasdfasdf',
+      email: 'test@test.com',
+      password: 'test',
     })
     .expect(400);
 });
@@ -33,15 +34,16 @@ it('responds with a valid cookie with successful signin', async () => {
   await request(app)
     .post('/api/users/signup')
     .send({
-      email: 'valid@test.com',
-      password: 'password',
+      email: 'test@test.com',
+      password: 'testpassword',
+      name: 'Test User',
     })
     .expect(201);
   const req = await request(app)
     .post('/api/users/signin')
     .send({
-      email: 'valid@test.com',
-      password: 'password',
+      email: 'test@test.com',
+      password: 'testpassword',
     })
     .expect(200);
   expect(req.get('Set-Cookie').toString().length).toBeGreaterThan(90);
