@@ -7,8 +7,8 @@ interface SigBoxAttrs {
   y: number;
   width: number;
   height: number;
-  signerId: string;
-  clickedOn: Date;
+  signerid: string;
+  clickedon: Date;
   type: SigBoxType;
   value: string;
 }
@@ -16,9 +16,10 @@ interface SigBoxAttrs {
 export interface SigBoxDoc extends mongoose.Document {
   x: number;
   y: number;
+  version: number;
   width: number;
   height: number;
-  signerId: string;
+  signerid: string;
   type: SigBoxType;
   value?: string;
 }
@@ -30,26 +31,30 @@ interface SigBoxModel extends mongoose.Model<SigBoxDoc> {
 const SigBoxSchema = new mongoose.Schema(
   {
     x: {
-      type: mongoose.Types.Decimal128,
+      type: Number,
       required: true,
+      min: 0,
     },
     y: {
-      type: mongoose.Types.Decimal128,
+      type: Number,
       required: true,
+      min: 0,
     },
     width: {
-      type: mongoose.Types.Decimal128,
+      type: Number,
       required: true,
+      min: 0,
     },
     height: {
-      type: mongoose.Types.Decimal128,
+      type: Number,
       required: true,
+      min: 0,
     },
-    signerId: {
+    signerid: {
       type: String,
       required: true,
     },
-    clickedOn: {
+    clickedon: {
       type: mongoose.Schema.Types.Date,
       required: false,
     },
@@ -82,5 +87,16 @@ SigBoxSchema.statics.build = (attrs: SigBoxAttrs) => {
 };
 
 const SigBox = mongoose.model<SigBoxDoc, SigBoxModel>('SigBox', SigBoxSchema);
+
+export const isSigBox = (SigBox: SigBoxDoc) => {
+  return (
+    parseFloat(SigBox.x.toString()) > 0 &&
+    parseFloat(SigBox.y.toString()) > 0 &&
+    parseFloat(SigBox.width.toString()) > 0 &&
+    parseFloat(SigBox.height.toString()) > 0 &&
+    SigBox.signerid != '' &&
+    Object.values(SigBoxType).includes(SigBox.type as SigBoxType)
+  );
+};
 
 export { SigBox };
