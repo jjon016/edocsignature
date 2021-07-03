@@ -1,14 +1,14 @@
 import mongoose from 'mongoose';
 import { DocStatus } from '@edoccoding/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
-import { SigBoxDoc, isSigBox } from './sigbox';
+import { SigBoxDoc, SigBoxAttrs, isSigBox } from './sigbox';
 
-interface DocAttrs {
+export interface DocAttrs {
   docid: string;
   docname: string;
   ownerid: string;
   docstatus: DocStatus;
-  sigboxes: Array<SigBoxDoc>;
+  sigboxes: Array<SigBoxAttrs>;
 }
 
 interface DocDoc extends mongoose.Document {
@@ -69,11 +69,8 @@ DocSchema.statics.build = (attrs: DocAttrs) => {
 };
 
 export const isDoc = (theDoc: DocAttrs) => {
-  let isValid =
-    theDoc.docid != '' &&
-    theDoc.docname != '' &&
-    Object.values(DocStatus).includes(theDoc.docstatus as DocStatus);
-  theDoc.sigboxes.map((box: SigBoxDoc) => {
+  let isValid = theDoc.docname != '';
+  theDoc.sigboxes.map((box: SigBoxAttrs) => {
     isValid = isValid && isSigBox(box);
   });
   return isValid;

@@ -2,7 +2,17 @@ import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { SigBoxType } from '@edoccoding/common';
 
-interface SigBoxAttrs {
+export interface SigBoxAttrs {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  signerid: string;
+  type: SigBoxType;
+  value?: string;
+}
+
+export interface SigBoxDoc extends mongoose.Document {
   x: number;
   y: number;
   width: number;
@@ -11,17 +21,7 @@ interface SigBoxAttrs {
   clickedon: Date;
   type: SigBoxType;
   value: string;
-}
-
-export interface SigBoxDoc extends mongoose.Document {
-  x: number;
-  y: number;
   version: number;
-  width: number;
-  height: number;
-  signerid: string;
-  type: SigBoxType;
-  value?: string;
 }
 
 interface SigBoxModel extends mongoose.Model<SigBoxDoc> {
@@ -88,7 +88,7 @@ SigBoxSchema.statics.build = (attrs: SigBoxAttrs) => {
 
 const SigBox = mongoose.model<SigBoxDoc, SigBoxModel>('SigBox', SigBoxSchema);
 
-export const isSigBox = (SigBox: SigBoxDoc) => {
+export const isSigBox = (SigBox: SigBoxAttrs) => {
   return (
     parseFloat(SigBox.x.toString()) > 0 &&
     parseFloat(SigBox.y.toString()) > 0 &&

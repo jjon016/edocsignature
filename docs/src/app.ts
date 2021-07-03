@@ -1,4 +1,5 @@
 import express from 'express';
+import fileUpload from 'express-fileupload';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
@@ -6,11 +7,13 @@ import { errorHandler, NotFoundError, currentUser } from '@edoccoding/common';
 
 //import routes here
 import { newDocRouter } from './routes/new';
+import { getDocData } from './routes/getdata';
 
 const app = express();
 app.set('trust proxy', true);
 
 app.use(json());
+app.use(fileUpload());
 app.use(
   cookieSession({
     signed: false,
@@ -18,6 +21,7 @@ app.use(
   })
 );
 app.use(currentUser);
+app.use(getDocData);
 
 //attach routes to app
 app.use(newDocRouter);
