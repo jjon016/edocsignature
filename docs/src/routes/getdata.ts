@@ -1,10 +1,5 @@
 import express, { Request, Response } from 'express';
-import {
-  requireAuth,
-  NotFoundError,
-  NotAuthorizedError,
-  currentUser,
-} from '@edoccoding/common';
+import { requireAuth, NotFoundError } from '@edoccoding/common';
 import { Doc } from '../models/doc';
 
 const router = express.Router();
@@ -16,12 +11,9 @@ router.get(
     const doc = await Doc.find({
       docid: req.params.docid,
       ownerid: req.currentUser!.id,
-    }).populate({
-      path: 'sigboxes',
-      populate: { path: 'sigboxes' },
     });
 
-    if (!doc) {
+    if (!doc || doc.length == 0) {
       throw new NotFoundError();
     }
 

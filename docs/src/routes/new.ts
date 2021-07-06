@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express';
-import { requireAuth, BadRequestError } from '@edoccoding/common';
+import { requireAuth, BadRequestError, DocStatus } from '@edoccoding/common';
 import { Doc, isDoc } from '../models/doc';
-import { SigBox, SigBoxAttrs } from '../models/sigbox';
 import { randomBytes } from 'crypto';
 import path from 'path';
 import fs from 'fs';
@@ -32,17 +31,13 @@ router.post('/api/docs/', requireAuth, async (req: Request, res: Response) => {
   if (!isDoc(theJSON)) {
     throw new BadRequestError('Invalid data in request');
   }
-  const sigboxes = theJSON.sigboxes;
-  let SigBoxDocs: Array<SigBoxAttrs> = [];
-  sigboxes.map((box: SigBoxAttrs) => {
-    SigBoxDocs.push(new SigBox(box));
-  });
+
   const doc = Doc.build({
     docid: id,
     docname: theJSON.docname,
     ownerid: theJSON.ownerid || req.currentUser!.id,
-    docstatus: theJSON.docstatus,
-    sigboxes: SigBoxDocs,
+    docstatus: theJSON.docstatus || DocStatus.Signing,
+    sigboxes: theJSON.sigboxes || [],
   });
   await doc.save();
   res.status(201).send(doc);

@@ -3,9 +3,8 @@ import path from 'path';
 import mongoose from 'mongoose';
 import { DocAttrs } from '../../models/doc';
 import { SigBoxType, DocStatus } from '@edoccoding/common';
-import { SigBoxAttrs, SigBox } from '../../models/sigbox';
 
-const randomFloat = (min: number, max: number) => {
+export const randomFloat = (min: number, max: number) => {
   return Math.random() * (max - min) + min;
 };
 
@@ -24,33 +23,6 @@ export const cleanDirectories = () => {
   });
 };
 
-export const buildValidSigBoxAttrsObj = () => {
-  const sigboxAttrs: SigBoxAttrs = {
-    x: randomFloat(10, 80),
-    y: randomFloat(10, 80),
-    width: randomFloat(5, 20),
-    height: randomFloat(2, 10),
-    signerid: mongoose.Types.ObjectId().toHexString(),
-    type: SigBoxType.Signature,
-    value: '',
-  };
-  return sigboxAttrs;
-};
-
-export const buildValidDocAttrsObj = (docid?: string, ownerid?: string) => {
-  const docAttrs: DocAttrs = {
-    docid: docid || mongoose.Types.ObjectId().toHexString(),
-    docname: 'A test document',
-    ownerid: ownerid || mongoose.Types.ObjectId().toHexString(),
-    docstatus: DocStatus.Signing,
-    sigboxes: [],
-  };
-  docAttrs.sigboxes.push(new SigBox(buildValidSigBoxAttrsObj()));
-  docAttrs.sigboxes.push(new SigBox(buildValidSigBoxAttrsObj()));
-  docAttrs.sigboxes.push(new SigBox(buildValidSigBoxAttrsObj()));
-  return docAttrs;
-};
-
 export const testValidDocObject = (docid?: string, ownerid?: string) => {
   return {
     docname: 'Test Doc',
@@ -59,21 +31,21 @@ export const testValidDocObject = (docid?: string, ownerid?: string) => {
     docstatus: DocStatus.Signing,
     sigboxes: [
       {
-        x: 2.222,
-        y: 2.22,
-        width: 2.22,
-        height: 2.22,
+        x: randomFloat(5, 70),
+        y: randomFloat(5, 70),
+        width: randomFloat(5, 70),
+        height: randomFloat(5, 70),
         signerid: mongoose.Types.ObjectId().toHexString(),
         type: SigBoxType.Signature,
         value: '',
       },
       {
-        x: 3.222,
-        y: 3.22,
-        width: 3.22,
-        height: 3.22,
+        x: randomFloat(5, 70),
+        y: randomFloat(5, 70),
+        width: randomFloat(5, 70),
+        height: randomFloat(5, 70),
         signerid: mongoose.Types.ObjectId().toHexString(),
-        type: SigBoxType.Signature,
+        type: SigBoxType.Initials,
         value: '',
       },
     ],
