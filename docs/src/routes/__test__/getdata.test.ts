@@ -19,8 +19,9 @@ it('fetches the doc', async () => {
   const docOne = await buildDoc(docOneId, userId);
 
   //fetch doc data
+  console.log(userOne);
   const response = await request(app)
-    .get(`/api/docs/${docOneId}`)
+    .get(`/api/docdata/${docOneId}`)
     .set('Cookie', userOne)
     .send()
     .expect(200);
@@ -37,7 +38,7 @@ it('throws 404 when trying to pull document that did not create', async () => {
 
   //fetch doc data
   const response = await request(app)
-    .get(`/api/docs/${docOneId}`)
+    .get(`/api/docdata/${docOneId}`)
     .set('Cookie', global.signin())
     .send()
     .expect(404);
@@ -46,7 +47,7 @@ it('throws 404 when trying to pull document that did not create', async () => {
 it('throws not found if doc does not exists', async () => {
   //fetch doc data
   const response = await request(app)
-    .get(`/api/docs/123`)
+    .get(`/api/docdata/123`)
     .set('Cookie', global.signin())
     .send()
     .expect(404);

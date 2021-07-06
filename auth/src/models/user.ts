@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { Password } from '../tools/password';
+import { FontTypes } from '@edoccoding/common';
 
 //An interface that describes the properties
 // required to create a new user
@@ -7,6 +8,10 @@ interface UserAttrs {
   email: string;
   password: string;
   name: string;
+  signaturetype?: FontTypes;
+  signature?: string;
+  initialstype?: FontTypes;
+  initials?: string;
 }
 
 //An interface that describes the properties
@@ -21,6 +26,10 @@ interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   name: string;
+  signaturetype: FontTypes;
+  signature: string;
+  initialstype: FontTypes;
+  initials: string;
 }
 
 const userSchema = new mongoose.Schema(
@@ -36,6 +45,22 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+    },
+    signaturetype: {
+      type: FontTypes,
+      required: false,
+    },
+    signature: {
+      type: String,
+      required: false,
+    },
+    initialstype: {
+      type: FontTypes,
+      required: false,
+    },
+    initials: {
+      type: String,
+      required: false,
     },
   },
   {

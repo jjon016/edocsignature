@@ -3,16 +3,9 @@ import { app } from '../../app';
 import { response } from 'express';
 import { DocStatus, SigBoxType } from '@edoccoding/common';
 import mongoose from 'mongoose';
-import {
-  testUploadFile,
-  cleanDirectories,
-  testValidDocObject,
-  randomFloat,
-} from './testparams';
+import { testUploadFile, testValidDocObject, randomFloat } from './testparams';
 
 it('returns 201 on create', async () => {
-  cleanDirectories();
-
   const res = await request(app)
     .post('/api/docs')
     .set('Cookie', global.signin())
@@ -22,8 +15,6 @@ it('returns 201 on create', async () => {
 });
 
 it('returns 400 on create if invalid coordinate is passed', async () => {
-  cleanDirectories();
-
   const res = await request(app)
     .post('/api/docs')
     .set('Cookie', global.signin())
@@ -51,8 +42,6 @@ it('returns 400 on create if invalid coordinate is passed', async () => {
 });
 
 it('returns 400 if blank doc id is passed', async () => {
-  cleanDirectories();
-
   const res = await request(app)
     .post('/api/docs')
     .set('Cookie', global.signin())
@@ -78,8 +67,6 @@ it('returns 400 if blank doc id is passed', async () => {
 });
 
 it('returns 201 with minimal requirements', async () => {
-  cleanDirectories();
-
   const res = await request(app)
     .post('/api/docs')
     .set('Cookie', global.signin())
@@ -94,8 +81,6 @@ it('returns 201 with minimal requirements', async () => {
 });
 
 it('returns 400 if document not attached', async () => {
-  cleanDirectories();
-
   const res = await request(app)
     .post('/api/docs')
     .set('Cookie', global.signin())
