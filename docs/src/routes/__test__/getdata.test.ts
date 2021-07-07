@@ -19,7 +19,6 @@ it('fetches the doc', async () => {
   const docOne = await buildDoc(docOneId, userId);
 
   //fetch doc data
-  console.log(userOne);
   const response = await request(app)
     .get(`/api/docdata/${docOneId}`)
     .set('Cookie', userOne)

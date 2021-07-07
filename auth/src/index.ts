@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { SignaturesSetListener } from './events/listener/signature-set-listener';
 
 const start = async () => {
   if (!process.env.JWTKEY) {
@@ -30,6 +31,8 @@ const start = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new SignaturesSetListener(natsWrapper.client).listen();
 
     await mongoose.connect(process.env.MONGOURI, {
       useNewUrlParser: true,
