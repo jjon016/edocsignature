@@ -16,6 +16,14 @@ spec:
         - name: docs
           image: fadeleafj/docs
           env:
+            - name: NATSURL
+              value: 'http://nats-srv:4222'
+            - name: NATSCLUSTERID
+              value: 'edocsignature'
+            - name: NATSCLIENTID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: MONGOURI
               value: 'mongodb://docs-mongo-srv:27017/docs'
             - name: JWTKEY

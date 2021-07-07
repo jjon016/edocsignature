@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Password } from '../tools/password';
 import { FontTypes } from '@edoccoding/common';
 
@@ -30,6 +31,7 @@ interface UserDoc extends mongoose.Document {
   signature: string;
   initialstype: FontTypes;
   initials: string;
+  version: number;
 }
 
 const userSchema = new mongoose.Schema(
@@ -74,6 +76,9 @@ const userSchema = new mongoose.Schema(
     },
   }
 );
+
+userSchema.set('versionKey', 'version');
+userSchema.plugin(updateIfCurrentPlugin);
 
 userSchema.pre('save', async function (done) {
   if (this.isModified('password')) {
