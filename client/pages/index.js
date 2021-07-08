@@ -1,16 +1,19 @@
 import bldClient from "../api/build-client";
+import CreateSig from "../components/createsig";
 
 //can derefernce values from getInitialProps
 const landing = ({ currentUser }) => {
-  console.log(currentUser);
-  return <h1>landing page</h1>;
+  return currentUser ? (
+    ((currentUser.signatureset) ? <h1>You are signed in</h1> : <CreateSig currentUser={currentUser} />)
+  ) : (
+    <h1>You are not signed in</h1>
+  );
 };
 
 //can preload data for pages here
 landing.getInitialProps = async (context) => {
-  const axiosClient = bldClient(context);
-  const {data} = await axiosClient.get('/api/users/currentuser');
-  return data; //currentUser
+  //get data to show on landing page
+  return {};
 };
 
 export default landing;

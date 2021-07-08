@@ -19,6 +19,8 @@ it('returns a 400 when an incorrect password is supplied', async () => {
       email: 'test@test.com',
       password: 'testpassword',
       name: 'Test User',
+      initials: 'T U',
+      phone: '8017917231',
     })
     .expect(201);
   await request(app)
@@ -26,6 +28,8 @@ it('returns a 400 when an incorrect password is supplied', async () => {
     .send({
       email: 'test@test.com',
       password: 'test',
+      initials: 'T U',
+      phone: '8017917231',
     })
     .expect(400);
 });
@@ -37,6 +41,8 @@ it('responds with a valid cookie with successful signin', async () => {
       email: 'test@test.com',
       password: 'testpassword',
       name: 'Test User',
+      initials: 'T U',
+      phone: '8017917231',
     })
     .expect(201);
   const req = await request(app)
@@ -44,6 +50,8 @@ it('responds with a valid cookie with successful signin', async () => {
     .send({
       email: 'test@test.com',
       password: 'testpassword',
+      initials: 'T U',
+      phone: '8017917231',
     })
     .expect(200);
   expect(req.get('Set-Cookie').toString().length).toBeGreaterThan(90);

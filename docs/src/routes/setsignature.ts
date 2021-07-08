@@ -23,6 +23,7 @@ router.post(
   async (req: Request, res: Response) => {
     const { signaturetype, signature, initialstype, initials } = req.body;
     let Sig = await Signature.findById(req.currentUser!.id);
+    let Updated = false;
     if (!Sig) {
       Sig = Signature.build({
         userid: req.currentUser!.id,
@@ -32,6 +33,7 @@ router.post(
         initials,
       });
     } else {
+      Updated = true;
       Sig.signaturetype = signaturetype;
       Sig.signature = signature;
       Sig.initialstype = initialstype;
@@ -39,9 +41,11 @@ router.post(
     }
     await Sig.save();
 
-    await new SignaturesSetPublisher(natsWrapper.client).publish({
-      userid: Sig.userid,
-    });
+    if (!Updated) {
+      await new SignaturesSetPublisher(natsWrapper.client).publish({
+        userid: Sig.userid,
+      });
+    }
 
     res.status(200).send({});
   }

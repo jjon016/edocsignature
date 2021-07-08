@@ -8,6 +8,8 @@ interface UserAttrs {
   email: string;
   password: string;
   name: string;
+  initials: string;
+  phone?: string;
   signatureset?: boolean;
 }
 
@@ -23,6 +25,8 @@ interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   name: string;
+  initials: string;
+  phone: string;
   signatureset: boolean;
   version: number;
 }
@@ -40,6 +44,14 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
+    },
+    initials: {
+      type: String,
+      required: true,
+    },
+    phone: {
+      type: String,
+      required: false,
     },
     signatureset: {
       type: Boolean,

@@ -9,6 +9,8 @@ it('clears cookie after signing out', async () => {
       email: 'test@test.com',
       password: 'testpassword',
       name: 'Test User',
+      initials: 'T U',
+      phone: '8017917231',
     })
     .expect(201);
   const req = await request(app).get('/api/users/signout').expect(200);

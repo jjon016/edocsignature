@@ -10,18 +10,23 @@ router.post(
   '/api/users/signup',
   [
     body('email').isEmail().withMessage('Invalid email'),
-    body('name')
-      .trim()
-      .isLength({ min: 4, max: 60 })
-      .withMessage('Name must be between 4 and 60 characters'),
     body('password')
       .trim()
       .isLength({ min: 4, max: 20 })
       .withMessage('Password must be between 4 and 20 characters'),
+    body('name')
+      .trim()
+      .isLength({ min: 4, max: 60 })
+      .withMessage('Name must be between 4 and 60 characters'),
+    body('initials')
+      .trim()
+      .isLength({ min: 2, max: 5 })
+      .withMessage('Name must be between 2 and 5 characters'),
+    body('phone').isLength({ min: 10, max: 10 }).withMessage('Invalid phone'),
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password, name } = req.body;
+    const { email, name, initials, phone, password } = req.body;
 
     const existingUser = await User.findOne({ email });
 
@@ -29,7 +34,7 @@ router.post(
       throw new BadRequestError('Email in use');
     }
 
-    const user = User.build({ email, password, name });
+    const user = User.build({ email, password, name, phone, initials });
     await user.save();
 
     //Generate JWT
@@ -38,6 +43,9 @@ router.post(
         id: user.id,
         email: user.email,
         name: user.name,
+        initials: user.initials,
+        phone: user.phone,
+        signatureset: user.signatureset,
       },
       process.env.JWTKEY!
     );

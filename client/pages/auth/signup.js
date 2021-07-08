@@ -4,14 +4,18 @@ import useRequest from '../../hooks/use-request';
 
 const signup = () => {
   const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [initials, setInitials] = useState('');
+  const [phone, setPhone] = useState('');
   const { doRequest, errors } = useRequest({
     url: '/api/users/signup',
     method: 'post',
     body:{
       email,
       name,
+      initials,
+      phone,
       password,
     },
     onSuccess: () => Router.push('/')
@@ -36,6 +40,15 @@ const signup = () => {
         />
       </div>
       <div className="form-group">
+        <label>Password</label>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
         <label>Full Name</label>
         <input
           type="text"
@@ -45,11 +58,20 @@ const signup = () => {
         />
       </div>
       <div className="form-group">
-        <label>Password</label>
+        <label>Initials</label>
         <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          type="text"
+          value={initials}
+          onChange={(e) => setInitials(e.target.value)}
+          className="form-control"
+        />
+      </div>
+      <div className="form-group">
+        <label>Mobile Phone</label>
+        <input
+          type="text"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value)}
           className="form-control"
         />
       </div>

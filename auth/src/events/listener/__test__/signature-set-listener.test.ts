@@ -26,6 +26,8 @@ it('Creates a user and then send message', async () => {
     email: 'test@test.com',
     name: 'test user',
     password: '1234',
+    initials: 'T U',
+    phone: '8017917231',
   });
 
   await user.save();
