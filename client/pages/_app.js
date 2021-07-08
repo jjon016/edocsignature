@@ -4,6 +4,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 //allows us to import bootstrap in all our pages
 //see github.com/zeit/next.js/blob/master/errors/css-global.md
 
-export default ({Component, pageProps}) => {
-  return <Component {...pageProps} />
+const _app = ({ Component, pageProps }) => {
+  return <Component {...pageProps} />;
 };
+
+export default _app;
