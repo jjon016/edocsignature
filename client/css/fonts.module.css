@@ -33,9 +33,14 @@
 .FontSelector {
   max-width: 50%;
 }
-.AlluraRegular {
-  font-family: AlluraRegular;
-  font-size: 35px;
+.FontSelected {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-left: #1ba165 solid 3px;
+}
+.FontNotSelected {
+  border: 1px solid rgba(0, 0, 0, 0.125);
+}
+.Font {
   line-height: 25px;
   position: relative;
   display: block;
@@ -44,62 +49,30 @@
   color: #212529;
   text-decoration: none;
   background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
   cursor: pointer;
 }
-.AnkeCallig {
+.alluraregular {
+  font-family: AlluraRegular;
+  font-size: 35px;
+}
+.ankecallig {
   font-family: AnkeCallig;
   font-size: 30px;
   line-height: 25px;
-  position: relative;
-  display: block;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  color: #212529;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  cursor: pointer;
 }
-.BlackJack {
+.blackjack {
   font-family: BlackJack;
   font-size: 25px;
-  line-height: 25px;
-  position: relative;
-  display: block;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  color: #212529;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  cursor: pointer;
 }
-.DancingScript {
+.dancingscript {
   font-family: DancingScript;
   font-size: 33px;
-  line-height: 25px;
-  position: relative;
-  display: block;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  color: #212529;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  cursor: pointer;
 }
-.GradeCursive {
+.gradecursive {
   font-family: GradeCursive;
   font-size: 13px;
-  line-height: 25px;
-  position: relative;
-  display: block;
-  padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  color: #212529;
-  text-decoration: none;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  cursor: pointer;
+}
+.honeyscriptlight {
+  font-family: HoneyScriptLight;
+  font-size: 33px;
 }

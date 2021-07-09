@@ -1,6 +1,5 @@
 import mongoose from 'mongoose';
 import { FontTypes } from '@edoccoding/common';
-import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
 export interface SignatureAttrs {
   userid: string;
@@ -8,6 +7,7 @@ export interface SignatureAttrs {
   signature: string;
   initialstype: FontTypes;
   initials: string;
+  userversion: number;
 }
 
 export interface SignatureDoc extends mongoose.Document {
@@ -16,7 +16,7 @@ export interface SignatureDoc extends mongoose.Document {
   signature: string;
   initialstype: FontTypes;
   initials: string;
-  version: number;
+  userversion: number;
 }
 
 interface SignatureModel extends mongoose.Model<SignatureDoc> {
@@ -49,6 +49,10 @@ const SignatureSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    userversion: {
+      type: Number,
+      required: true,
+    },
   },
   {
     toJSON: {
@@ -59,9 +63,6 @@ const SignatureSchema = new mongoose.Schema(
     },
   }
 );
-
-SignatureSchema.set('versionKey', 'version');
-SignatureSchema.plugin(updateIfCurrentPlugin);
 
 SignatureSchema.statics.build = (attrs: SignatureAttrs) => {
   return new Signature(attrs);

@@ -1,16 +1,16 @@
 import mongoose from 'mongoose';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Password } from '../tools/password';
+import { FontTypes } from '@edoccoding/common';
 
 //An interface that describes the properties
 // required to create a new user
 interface UserAttrs {
   email: string;
   password: string;
-  name: string;
-  initials: string;
+  name?: string;
+  initials?: string;
   phone?: string;
-  signatureset?: boolean;
 }
 
 //An interface that describes the properties
@@ -25,9 +25,11 @@ interface UserDoc extends mongoose.Document {
   email: string;
   password: string;
   name: string;
-  initials: string;
   phone: string;
-  signatureset: boolean;
+  signaturetype: FontTypes;
+  signature: string;
+  initialstype: FontTypes;
+  initials: string;
   version: number;
 }
 
@@ -43,20 +45,31 @@ const userSchema = new mongoose.Schema(
     },
     name: {
       type: String,
-      required: true,
-    },
-    initials: {
-      type: String,
-      required: true,
+      required: false,
     },
     phone: {
       type: String,
       required: false,
     },
-    signatureset: {
-      type: Boolean,
+    signaturetype: {
+      type: String,
       required: false,
-      default: false,
+      enum: Object.values(FontTypes),
+      default: FontTypes.AlluraRegular,
+    },
+    signature: {
+      type: String,
+      required: false,
+    },
+    initialstype: {
+      type: String,
+      required: false,
+      enum: Object.values(FontTypes),
+      default: FontTypes.AlluraRegular,
+    },
+    initials: {
+      type: String,
+      required: false,
     },
   },
   {
