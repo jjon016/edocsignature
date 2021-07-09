@@ -8,12 +8,11 @@ router.get(
   '/api/docdata/:docid',
   requireAuth,
   async (req: Request, res: Response) => {
-    const doc = await Doc.find({
-      docid: req.params.docid,
-      ownerid: req.currentUser!.id,
-    });
-
-    if (!doc || doc.length == 0) {
+    const id = req.params.docid;
+    let doc = null;
+    try {
+      doc = await Doc.findById(id);
+    } catch {
       throw new NotFoundError();
     }
 

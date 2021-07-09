@@ -25,10 +25,10 @@ it('can return pdf file after its saved', async () => {
     .field('JSON', JSON.stringify(testValidDocObject()))
     .attach('FILE', testUploadFile)
     .expect(201);
-  expect(res.body.docid).not.toBeNull();
+  expect(res.body.id).not.toBeNull();
 
   const res2 = await request(app)
-    .get(`/api/docs/${res.body.docid}`)
+    .get(`/api/docs/${res.body.id}`)
     .set('Cookie', global.signin(userId))
     .expect(200);
   expect(res2.headers['content-type']).toEqual('application/pdf');

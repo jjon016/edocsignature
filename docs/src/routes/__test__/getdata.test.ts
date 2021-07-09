@@ -24,23 +24,8 @@ it('fetches the doc', async () => {
     .set('Cookie', userOne)
     .send()
     .expect(200);
-  expect(response.body[0].docid).toEqual(docOneId);
-  expect(response.body[0].sigboxes[0].type == SigBoxType.Signature);
-});
-
-it('throws 404 when trying to pull document that did not create', async () => {
-  //create doc data
-  const userId = mongoose.Types.ObjectId().toHexString();
-  const docOneId = mongoose.Types.ObjectId().toHexString();
-  const userOne = global.signin(userId);
-  const docOne = await buildDoc(docOneId, userId);
-
-  //fetch doc data
-  const response = await request(app)
-    .get(`/api/docdata/${docOneId}`)
-    .set('Cookie', global.signin())
-    .send()
-    .expect(404);
+  expect(response.body.id).toEqual(docOneId);
+  expect(response.body.sigboxes[0].type == SigBoxType.Signature);
 });
 
 it('throws not found if doc does not exists', async () => {

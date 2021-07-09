@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { UserUpdatedListener } from './events/listeners/user-updated-listener';
 
 const start = async () => {
   if (!process.env.JWTKEY) {
@@ -30,6 +31,9 @@ const start = async () => {
     });
     process.on('SIGINT', () => natsWrapper.client.close());
     process.on('SIGTERM', () => natsWrapper.client.close());
+
+    new UserUpdatedListener(natsWrapper.client).listen();
+
     await mongoose.connect(process.env.MONGOURI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,

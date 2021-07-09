@@ -8,6 +8,7 @@ import { currentUserRouter } from './routes/currentuser';
 import { signinRouter } from './routes/signin';
 import { signupRouter } from './routes/signup';
 import { signoutRouter } from './routes/signout';
+import { updateUserRouter } from './routes/updateuser';
 
 const app = express();
 app.set('trust proxy', true);
@@ -26,6 +27,7 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signupRouter);
 app.use(signoutRouter);
+app.use(updateUserRouter);
 
 app.all('*', async () => {
   throw new NotFoundError();

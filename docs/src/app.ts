@@ -9,7 +9,6 @@ import { errorHandler, NotFoundError, currentUser } from '@edoccoding/common';
 import { newDocRouter } from './routes/new';
 import { getDocData } from './routes/getdata';
 import { getDoc } from './routes/getdoc';
-import { setSigRouter } from './routes/setsignature';
 
 const app = express();
 app.set('trust proxy', true);
@@ -25,7 +24,6 @@ app.use(
 app.use(currentUser);
 app.use(getDocData);
 app.use(getDoc);
-app.use(setSigRouter);
 
 //attach routes to app
 app.use(newDocRouter);

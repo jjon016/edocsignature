@@ -24,7 +24,7 @@ router.post(
       throw new BadRequestError('Invalid credentials');
     }
     const passwordsMatch = await Password.compare(
-      existingUser.password,
+      existingUser.password || '',
       password
     );
     if (!passwordsMatch) {

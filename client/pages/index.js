@@ -1,10 +1,11 @@
 import bldClient from "../api/build-client";
-import CreateSig from "../components/createsig";
+import Main from "../components/landingscreen/main";
 
 //can derefernce values from getInitialProps
-const landing = ({ currentUser }) => {
+const landing = (props) => {
+  const {currentUser} = props;
   return currentUser ? (
-    ((currentUser.signatureset) ? <h1>You are signed in</h1> : <CreateSig currentUser={currentUser} />)
+    <Main currentUser={currentUser} />
   ) : (
     <h1>You are not signed in</h1>
   );

@@ -22,14 +22,15 @@ interface UserModel extends mongoose.Model<UserDoc> {
 //An interface that describes the properties
 // that a user document has
 interface UserDoc extends mongoose.Document {
+  id: string;
   email: string;
-  password: string;
-  name: string;
-  phone: string;
-  signaturetype: FontTypes;
-  signature: string;
-  initialstype: FontTypes;
-  initials: string;
+  password?: string;
+  name?: string;
+  phone?: string;
+  signaturetype?: FontTypes;
+  signature?: string;
+  initialstype?: FontTypes;
+  initials?: string;
   version: number;
 }
 

@@ -26,9 +26,16 @@ export const cleanDirectories = () => {
 export const testValidDocObject = (docid?: string, ownerid?: string) => {
   return {
     docname: 'Test Doc',
-    docid: docid || mongoose.Types.ObjectId().toHexString(),
+    _id: docid || mongoose.Types.ObjectId().toHexString(),
     ownerid: ownerid || mongoose.Types.ObjectId().toHexString(),
     docstatus: DocStatus.Signing,
+    signers: [
+      {
+        email: 'test@test.com',
+        signerid: mongoose.Types.ObjectId().toHexString(),
+        tiergroup: 0,
+      },
+    ],
     sigboxes: [
       {
         x: randomFloat(5, 70),

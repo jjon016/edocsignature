@@ -2,16 +2,11 @@ import mongoose from 'mongoose';
 import { DocStatus, SigBoxType } from '@edoccoding/common';
 import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 
-export const isSigBox = (SigBox: SigBoxAttrs) => {
-  return (
-    parseFloat(SigBox.x.toString()) > 0 &&
-    parseFloat(SigBox.y.toString()) > 0 &&
-    parseFloat(SigBox.width.toString()) > 0 &&
-    parseFloat(SigBox.height.toString()) > 0 &&
-    SigBox.signerid != '' &&
-    Object.values(SigBoxType).includes(SigBox.type as SigBoxType)
-  );
-};
+export interface SignerAttrs {
+  email: string;
+  signerid: string;
+  tiergroup: number;
+}
 
 export interface SigBoxAttrs {
   x: number;
@@ -21,6 +16,12 @@ export interface SigBoxAttrs {
   signerid: string;
   type: SigBoxType;
   value?: string;
+}
+
+export interface SignerDoc {
+  email: string;
+  signerid: string;
+  tiergroup: number;
 }
 
 export interface SigBoxDoc {
@@ -36,15 +37,16 @@ export interface SigBoxDoc {
 }
 
 export interface DocAttrs {
-  docid: string;
+  _id: string;
   docname: string;
   ownerid: string;
   docstatus: DocStatus;
-  sigboxes: Array<SigBoxAttrs>;
+  signers?: Array<SignerAttrs>;
+  sigboxes?: Array<SigBoxAttrs>;
 }
 
 interface DocDoc extends mongoose.Document {
-  docid: string;
+  id: string;
   docname: string;
   ownerid: string;
   docstatus: DocStatus;
@@ -58,7 +60,11 @@ interface DocModel extends mongoose.Model<DocDoc> {
 
 const DocSchema = new mongoose.Schema(
   {
-    docid: {
+    docname: {
+      type: String,
+      required: true,
+    },
+    ownerid: {
       type: String,
       required: true,
     },
@@ -68,14 +74,23 @@ const DocSchema = new mongoose.Schema(
       enum: Object.values(DocStatus),
       default: DocStatus.Signing,
     },
-    ownerid: {
-      type: String,
-      required: true,
-    },
-    docname: {
-      type: String,
-      required: true,
-    },
+    signers: [
+      {
+        email: {
+          type: String,
+          required: true,
+        },
+        signerid: {
+          type: String,
+          required: true,
+        },
+        tiergroup: {
+          type: Number,
+          required: true,
+          default: 0,
+        },
+      },
+    ],
     sigboxes: [
       {
         x: {
@@ -134,16 +149,6 @@ DocSchema.plugin(updateIfCurrentPlugin);
 
 DocSchema.statics.build = (attrs: DocAttrs) => {
   return new Doc(attrs);
-};
-
-export const isDoc = (theDoc: DocAttrs) => {
-  let isValid = theDoc.docname != '';
-  if (theDoc.sigboxes) {
-    theDoc.sigboxes.map((box: SigBoxAttrs) => {
-      isValid = isValid && isSigBox(box);
-    });
-  }
-  return isValid;
 };
 
 const Doc = mongoose.model<DocDoc, DocModel>('Doc', DocSchema);
