@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eDOCSignature</title>
+    <link rel="icon" href="images\ediico.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="images\ediico.ico" type="image/x-icon" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="css/eDOCSignature.css" />
+    <script src="js/jfunctions.js"></script>
+    <script src="js/auth/login.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-7 d-none d-lg-block glasspanel p-2">
+            <div
+              id="carouselMarketing"
+              class="carousel slide h-100 d-flex align-items-center"
+              data-bs-ride="carousel"
+            >
+              <div class="carousel-inner h-100">
+                <div class="carousel-item active">
+                  <img
+                    class="d-block w-100"
+                    src="marketing/Always_Time_to_Sign.jpg"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img
+                    class="d-block w-100"
+                    src="marketing/EDS_Beach_Text_Reach_Your_Members.jpg"
+                  />
+                </div>
+                <div class="carousel-item">
+                  <img class="d-block w-100" src="marketing/Isod_User2.jpg" />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-1 d-none d-lg-block"></div>
+
+          <div class="col-lg-4 glasspanel p-2">
+            <div class="card bg-white card-form h-100 w-100" id="UserLoginCard">
+              <form class="card-body" id="loginform" onsubmit="Login(event);">
+                <h4 class="card-title my-3">Sign in</h4>
+                <div class="form-group">
+                  <label for="Email" class="text-start w-100" id="EmailLbl"
+                    >Email</label
+                  >
+                  <input
+                    type="text"
+                    name="Email"
+                    id="Email"
+                    class="form-control form-control-lg"
+                    placeholder="Email"
+                  />
+                  <label
+                    for="Password"
+                    class="text-start w-100"
+                    id="PasswordLbl"
+                    >Password</label
+                  >
+                  <input
+                    type="password"
+                    name="Password"
+                    id="Password"
+                    class="form-control form-control-lg"
+                    placeholder="Password"
+                  />
+                </div>
+                <div
+                  id="errors"
+                  class="d-none"
+                  style="padding: 0.5rem 0.8rem"
+                ></div>
+                <a class="btn btn-success btn-block mt-3" href="signup.html"
+                  >Create New Account</a
+                >
+                <input
+                  type="submit"
+                  class="btn btn-primary btn-block mt-3"
+                  value="Sign in"
+                />
+              </form>
+              <div class="card-footer bg-transparent">
+                <div class="row text-center">
+                  <div class="col">Help</div>
+                  <div class="col">Privacy</div>
+                  <div class="col">Terms</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -24,11 +24,11 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: fadeleafj/client
-      context: client
+    - image: fadeleafj/web
+      context: web
       docker:
         dockerfile: Dockerfile
       sync:
         manual:
-          - src: '**/*.js'
+          - src: '**/*'
             dest: .
