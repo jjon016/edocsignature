@@ -15,7 +15,6 @@ const router = express.Router();
 router.post(
   '/api/users/update',
   requireAuth,
-  validateRequest,
   async (req: Request, res: Response) => {
     let {
       email,
@@ -41,7 +40,7 @@ router.post(
       if (!validator.isEmail(email)) {
         throw new BadRequestError('Email invalid');
       }
-      const sameEmail = await User.findOne({ email });
+      const sameEmail = await User.findOne({ email: email });
       if (sameEmail && sameEmail.id != aUser.id) {
         throw new BadRequestError('Email already being used');
       }
@@ -57,7 +56,7 @@ router.post(
     }
 
     if (phone) {
-      phone = validator.trim(phone);
+      phone = validator.trim(phone.toString());
       if (!validator.isLength(phone, { min: 10, max: 10 })) {
         throw new BadRequestError('Phone invalid');
       }
@@ -109,7 +108,7 @@ router.post(
 
     new UserUpdatedPublisher(natsWrapper.client).publish(aUser);
 
-    res.send(aUser);
+    res.status(200).send(aUser);
   }
 );
 

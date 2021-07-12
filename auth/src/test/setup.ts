@@ -2,11 +2,12 @@ import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
 import request from 'supertest';
 import { app } from '../app';
+import { newuser, newusertype } from '../routes/__test__/testuser';
 
 declare global {
   namespace NodeJS {
     interface Global {
-      signin(): Promise<string[]>;
+      signin(testuser?: newusertype): Promise<string[]>;
     }
   }
 }
@@ -38,13 +39,14 @@ afterAll(async () => {
   await mongoose.connection.close();
 });
 
-global.signin = async () => {
-  const email = 'test@test.com';
-  const password = 'password';
+global.signin = async (testuser?: newusertype) => {
+  if (!testuser) {
+    testuser = newuser();
+  }
 
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send(testuser)
     .expect(201);
 
   const cookie = response.get('Set-Cookie');

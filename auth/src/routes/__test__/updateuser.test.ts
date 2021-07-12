@@ -1,86 +1,76 @@
 import request from 'supertest';
 import { app } from '../../app';
-import { FontTypes } from '@edoccoding/common';
 import { natsWrapper } from '../../nats-wrapper';
-
-const email = 'test@test.com';
-const password = 'password';
-const name = 'Test User';
-const initials = 'TU';
-const phone = '1231231234';
-const signature = 'Test User';
-const signaturetype = FontTypes.AlluraRegular;
-const initialstype = FontTypes.AlluraRegular;
+import { newfulluser, newuser, updateuser } from './testuser';
 
 it('Able to update all data', async () => {
+  const user = newuser();
+  const updateduser = updateuser(user);
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send(user)
     .expect(201);
   const cookie = response.get('Set-Cookie');
 
   const updateres = await request(app)
     .post('/api/users/update')
     .set('Cookie', cookie)
-    .send({
-      email,
-      password,
-      name,
-      initials,
-      phone,
-      signature,
-      signaturetype,
-      initialstype,
-    })
+    .send(updateduser)
     .expect(200);
 });
 
 it('Able to update just name', async () => {
+  const user = newuser();
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send(user)
     .expect(201);
   const cookie = response.get('Set-Cookie');
 
   const updateres = await request(app)
     .post('/api/users/update')
     .set('Cookie', cookie)
-    .send({ name })
+    .send(newfulluser().name)
     .expect(200);
 });
 
 it('It publishes an event after updating', async () => {
+  const user1 = newuser();
+  const updateduser1 = updateuser(user1);
+
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send(user1)
     .expect(201);
   const cookie = response.get('Set-Cookie');
 
   const updateres = await request(app)
     .post('/api/users/update')
     .set('Cookie', cookie)
-    .send({ signature, signaturetype, initialstype, initials })
+    .send(updateduser1)
     .expect(200);
 
   expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
 
 it('Unable to update email to one that is already in use', async () => {
+  const user = newuser();
+  const user2 = newuser();
   const response = await request(app)
     .post('/api/users/signup')
-    .send({ email, password })
+    .send(user)
     .expect(201);
   const cookie = response.get('Set-Cookie');
 
   const response2 = await request(app)
     .post('/api/users/signup')
-    .send({ email: 'test2@test.com', password })
+    .send(user2)
     .expect(201);
   const cookie2 = response.get('Set-Cookie');
 
   const updateres = await request(app)
     .post('/api/users/update')
     .set('Cookie', cookie)
-    .send({ email: 'test2@test.com' })
+    .send({ email: user2.email })
     .expect(400);
 });

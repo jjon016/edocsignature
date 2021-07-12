@@ -50,6 +50,7 @@ interface DocDoc extends mongoose.Document {
   docname: string;
   ownerid: string;
   docstatus: DocStatus;
+  signers: Array<SignerDoc>;
   sigboxes: Array<SigBoxDoc>;
   version: number;
 }

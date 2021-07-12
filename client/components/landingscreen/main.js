@@ -4,7 +4,7 @@ const Main = ({ currentUser }) => {
   return (
     <div className="container">
       <div className="row my-1">
-        <Link href="/senddoc/upload">
+        <Link href="/senddoc/senddoc">
           <button className="btn btn-outline-primary">
             Send Document for Signing
           </button>

@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import Router from 'next/router';
 import postFile from '../../hooks/post-file';
-import { DocStatus } from '@edoccoding/common';
 //http://djorg83.github.io/react-bootstrap-sweetalert/
 
-const upload = ({ currentUser }) => {
+const Upload = (props) => {
   const [docname, setDocname] = useState('');
   const [image, setImage] = useState(null);
 
@@ -19,7 +18,9 @@ const upload = ({ currentUser }) => {
     body: {
       docname,
     },
-    onSuccess: () => Router.push('/'),
+    onSuccess: (res) => {
+      this.props.setCreatedDoc(res);
+    },
   });
 
   const onSubmit = async (event) => {
@@ -40,7 +41,7 @@ const upload = ({ currentUser }) => {
       <h3>Choose a document to sign</h3>
       <form onSubmit={onSubmit}>
         <div className="form-group">
-          <label for="fileIn">Upload a Document</label>
+          <label>Upload a Document</label>
           <input
             type="file"
             className="form-control-file"
@@ -49,7 +50,7 @@ const upload = ({ currentUser }) => {
           />
         </div>
         <div class="form-group">
-          <label for="docName">Document Name</label>
+          <label>Document Name</label>
           <input
             type="text"
             id="docName"
@@ -65,4 +66,4 @@ const upload = ({ currentUser }) => {
   );
 };
 
-export default upload;
+export default Upload;
