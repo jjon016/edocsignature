@@ -1,3 +1,14 @@
+const doCreate = async (email, password) => {
+  res = await postData('/api/users/signup', {
+    email: email,
+    password: password,
+  });
+  if (res.errors) {
+    showErrors(res.errors);
+  } else {
+    window.open('main.html', '_self');
+  }
+};
 function CreateAccount(event) {
   event.preventDefault();
   hideErrors();
@@ -12,7 +23,5 @@ function CreateAccount(event) {
     showErrors(['Passwords did not match']);
     return false;
   }
-  console.log(
-    postData('/api/users/signup', { email: email, password: password })
-  );
+  doCreate(email, password);
 }
