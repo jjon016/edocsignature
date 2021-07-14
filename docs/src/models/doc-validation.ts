@@ -16,6 +16,8 @@ export const isSigBox = (SigBox: SigBoxAttrs) => {
     parseFloat(SigBox.y.toString()) > 0 &&
     parseFloat(SigBox.width.toString()) > 0 &&
     parseFloat(SigBox.height.toString()) > 0 &&
+    parseInt(SigBox.fontsize.toString()) > 0 &&
+    parseInt(SigBox.page.toString()) >= 0 &&
     SigBox.signerid != '' &&
     Object.values(SigBoxType).includes(SigBox.type as SigBoxType)
   );
@@ -30,7 +32,6 @@ export const isDoc = (theDoc: DocAttrs) => {
   }
   if (theDoc.signers) {
     theDoc.signers.map((signer: SignerAttrs) => {
-      //console.log(JSON.stringify(signer, null, 2));
       isValid = isValid && isSigner(signer);
     });
   }

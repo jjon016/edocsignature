@@ -6,7 +6,7 @@ const doCreate = async (email, password) => {
   if (res.errors) {
     showErrors(res.errors);
   } else {
-    window.open('main.html', '_self');
+    window.open('landing.html', '_self');
   }
 };
 function CreateAccount(event) {

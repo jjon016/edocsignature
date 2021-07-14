@@ -6,7 +6,7 @@ const doLogin = async (email, password) => {
   if (res.errors) {
     showErrors(res.errors);
   } else {
-    window.open('main.html', '_self');
+    window.open('landing.html', '_self');
   }
 };
 function Login(event) {
@@ -29,7 +29,7 @@ const checkUser = async () => {
     showErrors(res.errors);
   } else {
     if (res.currentUser) {
-      window.open('main.html', '_self');
+      window.open('landing.html', '_self');
     } else {
       get('Email').focus();
     }

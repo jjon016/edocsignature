@@ -13,6 +13,8 @@ export interface SigBoxAttrs {
   y: number;
   width: number;
   height: number;
+  page: number;
+  fontsize: number;
   signerid: string;
   type: SigBoxType;
   value?: string;
@@ -29,11 +31,12 @@ export interface SigBoxDoc {
   y: number;
   width: number;
   height: number;
+  page: number;
+  fontsize: number;
   signerid: string;
   clickedon: Date;
   type: SigBoxType;
   value: string;
-  version: number;
 }
 
 export interface DocAttrs {
@@ -110,6 +113,16 @@ const DocSchema = new mongoose.Schema(
           min: 0,
         },
         height: {
+          type: Number,
+          required: true,
+          min: 0,
+        },
+        page: {
+          type: Number,
+          required: true,
+          min: 0,
+        },
+        fontsize: {
           type: Number,
           required: true,
           min: 0,
