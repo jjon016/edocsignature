@@ -23,7 +23,12 @@ export const cleanDirectories = () => {
   });
 };
 
-export const testValidDocObject = (docid?: string, ownerid?: string) => {
+export const testValidDocObject = (
+  docid?: string,
+  ownerid?: string,
+  signerid?: string
+) => {
+  const theSignerID = signerid || mongoose.Types.ObjectId().toHexString();
   return {
     docname: 'Test Doc',
     _id: docid || mongoose.Types.ObjectId().toHexString(),
@@ -32,7 +37,7 @@ export const testValidDocObject = (docid?: string, ownerid?: string) => {
     signers: [
       {
         email: 'test@test.com',
-        signerid: mongoose.Types.ObjectId().toHexString(),
+        signerid: theSignerID,
         tiergroup: 0,
       },
     ],
@@ -44,7 +49,7 @@ export const testValidDocObject = (docid?: string, ownerid?: string) => {
         height: randomFloat(5, 70),
         page: 0,
         fontsize: 30,
-        signerid: mongoose.Types.ObjectId().toHexString(),
+        signerid: theSignerID,
         type: SigBoxType.Signature,
         value: '',
       },
@@ -55,7 +60,7 @@ export const testValidDocObject = (docid?: string, ownerid?: string) => {
         height: randomFloat(5, 70),
         page: 0,
         fontsize: 30,
-        signerid: mongoose.Types.ObjectId().toHexString(),
+        signerid: theSignerID,
         type: SigBoxType.Initials,
         value: '',
       },

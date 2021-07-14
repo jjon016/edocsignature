@@ -1,8 +1,10 @@
 import express, { Router, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { User } from '../models/user';
+import { TempUser } from '../models/tempuser';
 import { BadRequestError, validateRequest } from '@edoccoding/common';
 import jwt from 'jsonwebtoken';
+import mongoose from 'mongoose';
 
 const router = express.Router();
 
@@ -18,6 +20,7 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
+    let id = mongoose.Types.ObjectId().toHexString();
 
     const existingUser = await User.findOne({ email });
 
@@ -25,8 +28,18 @@ router.post(
       throw new BadRequestError('Email in use');
     }
 
-    const user = User.build({ email, password });
+    const tempUser = await TempUser.findOne({ email });
+
+    if (tempUser) {
+      id = tempUser.id;
+    }
+
+    const user = User.build({ _id: id, email, password });
     await user.save();
+
+    if (tempUser) {
+      await TempUser.findByIdAndDelete(tempUser.id);
+    }
 
     //Generate JWT
     const userJwt = jwt.sign(

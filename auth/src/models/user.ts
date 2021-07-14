@@ -6,6 +6,7 @@ import { FontTypes } from '@edoccoding/common';
 //An interface that describes the properties
 // required to create a new user
 interface UserAttrs {
+  _id?: string;
   email: string;
   password: string;
   name?: string;

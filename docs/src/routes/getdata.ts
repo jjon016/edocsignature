@@ -5,7 +5,7 @@ import { Doc } from '../models/doc';
 const router = express.Router();
 
 router.get(
-  '/api/docdata/:docid',
+  '/api/docs/data/:docid',
   requireAuth,
   async (req: Request, res: Response) => {
     const id = req.params.docid;

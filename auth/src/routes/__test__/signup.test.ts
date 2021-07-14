@@ -1,6 +1,7 @@
 import { bademailuser, badpassworduser, newuser } from './testuser';
 import request from 'supertest';
 import { app } from '../../app';
+import { TempUser } from '../../models/tempuser';
 
 it('returns a 201 on successful signup', async () => {
   return await request(app)
@@ -58,4 +59,22 @@ it('sets a cookie after successful signup', async () => {
     .send(newuser())
     .expect(201);
   expect(req.get('Set-Cookie').toString().length).toBeGreaterThan(90);
+});
+
+it('uses a tempuser id if it exists and deletes the tempuser entry', async () => {
+  const cookie = await global.signin();
+  const auser = newuser();
+  const emails: string[] = [auser.email];
+  const res = await request(app)
+    .post('/api/users/tempusers')
+    .set('Cookie', cookie)
+    .send({ emails })
+    .expect(200);
+  const res2 = await request(app)
+    .post('/api/users/signup')
+    .send(auser)
+    .expect(201);
+  expect(res.body[0].id).toEqual(res2.body.id);
+  const tuser = await TempUser.find({ email: auser.email });
+  expect(tuser).toEqual([]);
 });

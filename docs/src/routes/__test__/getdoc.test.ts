@@ -12,7 +12,7 @@ import {
 it('returns not found if pdf does not exists', async () => {
   const userId = mongoose.Types.ObjectId().toHexString();
   const res2 = await request(app)
-    .get(`/api/docs/123`)
+    .get(`/api/docs/image/123`)
     .set('Cookie', global.signin(userId))
     .expect(404);
 });
@@ -28,7 +28,7 @@ it('can return pdf file after its saved', async () => {
   expect(res.body.id).not.toBeNull();
 
   const res2 = await request(app)
-    .get(`/api/docs/${res.body.id}`)
+    .get(`/api/docs/image/${res.body.id}`)
     .set('Cookie', global.signin(userId))
     .expect(200);
   expect(res2.headers['content-type']).toEqual('application/pdf');

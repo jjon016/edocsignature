@@ -1,21 +1,21 @@
 import express, { Request, Response } from 'express';
 import { requireAuth, NotFoundError } from '@edoccoding/common';
 import { Doc } from '../models/doc';
-import path from 'path';
-import fs from 'fs';
 
 const router = express.Router();
 
 router.get(
-  '/api/docs/image/:docid',
+  '/api/docs/tosign',
   requireAuth,
   async (req: Request, res: Response) => {
-    const theFile = path.join(__dirname, 'signings', req.params.docid + '.pdf');
-    if (!fs.existsSync(theFile)) {
+    let doc = null;
+    try {
+      doc = await Doc.find({ 'signers.signerid': req.currentUser!.id });
+    } catch {
       throw new NotFoundError();
     }
-    res.download(theFile);
+    res.send(doc);
   }
 );
 
-export { router as getDoc };
+export { router as getDocsToSign };
