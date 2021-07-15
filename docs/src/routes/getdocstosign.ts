@@ -8,13 +8,15 @@ router.get(
   '/api/docs/tosign',
   requireAuth,
   async (req: Request, res: Response) => {
-    let doc = null;
+    let docs = null;
     try {
-      doc = await Doc.find({ 'signers.signerid': req.currentUser!.id });
+      console.log('Looking for docs for: ' + req.currentUser!.id);
+      docs = await Doc.find({ 'signers.signerid': req.currentUser!.id });
     } catch {
       throw new NotFoundError();
     }
-    res.send(doc);
+    console.log(docs);
+    res.send({ docs: docs });
   }
 );
 

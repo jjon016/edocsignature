@@ -25,13 +25,9 @@ function Login(event) {
 }
 const checkUser = async () => {
   res = await getData('/api/users/currentuser', {});
-  if (res.errors) {
-    showErrors(res.errors);
+  if (res && res.currentUser) {
+    window.open('landing.html', '_self');
   } else {
-    if (res.currentUser) {
-      window.open('landing.html', '_self');
-    } else {
-      get('Email').focus();
-    }
+    get('Email').focus();
   }
 };

@@ -18,9 +18,12 @@ async function getData(url) {
       redirect: 'follow', // manual, *follow, error
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
     });
+    if (!response.ok) {
+      throw 'Error making request: ' + response.statusText;
+    }
     return response.json(); // parses JSON response into native JavaScript objects
   } catch (error) {
-    showErrors([error]);
+    return { errors: [{ message: error }] };
   }
 }
 async function postData(url = '', data = {}) {
@@ -39,9 +42,12 @@ async function postData(url = '', data = {}) {
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: JSON.stringify(data), // body data type must match "Content-Type" header
     });
+    if (!response.ok) {
+      throw 'Error making request: ' + response.statusText;
+    }
     return response.json(); // parses JSON response into native JavaScript objects
   } catch (error) {
-    showErrors([error]);
+    return { errors: [{ message: error }] };
   }
 }
 async function postFileData(url, file, json) {
@@ -59,15 +65,19 @@ async function postFileData(url, file, json) {
       referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
       body: data, // body data type must match "Content-Type" header
     });
+    if (!response.ok) {
+      throw 'Error making request: ' + response.statusText;
+    }
     return response.json(); // parses JSON response into native JavaScript objects
   } catch (error) {
-    showErrors([error]);
+    return { errors: [{ message: error }] };
   }
 }
 function showErrors(errors) {
   if (get('errors')) {
     let page =
       '<div class="alert alert-danger"><h5>Ooops ....</h5><ul class="my-0">';
+    console.log(errors);
     errors.map((err) => {
       if (err.message) {
         page += '<li>' + err.message + '</li>';
@@ -119,6 +129,9 @@ const verifyUser = async () => {
   let res = null;
   try {
     res = await getData('/api/users/currentuser', {});
+    if (!res.currentUser) {
+      window.open('index.html', '_self');
+    }
   } catch (error) {
     if (!res || !res.currentUser) {
       window.open('index.html', '_self');

@@ -25,9 +25,11 @@
     <link rel="stylesheet" href="css/eDOCSignature.css" />
     <script src="js/jfunctions.js"></script>
     <script src="js/auth/signout.js"></script>
+    <script src="js/landing/landing.js"></script>
     <script>
       window.onload = (event) => {
         verifyUser();
+        getDocsToSignList();
       };
     </script>
   </head>
@@ -72,13 +74,10 @@
       <div class="container">
         <div class="row">
           <div class="col glasspanel p-2">
-            <div class="card bg-white card-form h-100 w-100" id="MainCellCard">
-              <div class="container">
-                <div class="row text-center mt-2">
-                  <h3>Welcome</h3>
-                </div>
-              </div>
-            </div>
+            <div
+              class="card bg-white card-form h-100 w-100"
+              id="MainCellCard"
+            ></div>
           </div>
         </div>
       </div>

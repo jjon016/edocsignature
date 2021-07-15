@@ -20,7 +20,7 @@ function CreateAccount(event) {
     return false;
   }
   if (cpass != password) {
-    showErrors(['Passwords did not match']);
+    showErrors([{ message: 'Passwords did not match' }]);
     return false;
   }
   doCreate(email, password);

@@ -81,7 +81,7 @@ function transformSigBoxFields() {
       width: sigbox.wp,
       height: sigbox.hp,
       page: sigbox.page,
-      fontsize: sigbox.fontsize,
+      fontsize: parseInt(sigbox.fontsize),
       signerid: sigbox.signerid,
       type: 'signature',
       value: sigbox.fieldvalue,
@@ -100,6 +100,6 @@ async function SaveSendDoc() {
   if (res.errors) {
     showErrors(res.errors);
   } else {
-    window.open('landing.html');
+    window.open('landing.html', '_self');
   }
 }

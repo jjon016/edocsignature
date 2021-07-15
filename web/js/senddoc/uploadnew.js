@@ -28,6 +28,6 @@ const uploadNewDoc = async (event) => {
   var theFile = get('upDoc');
   var theName = get('docName').value;
   res = await postFileData('/api/docs/', theFile, { docname: theName });
-  UploadedDoc = new Doc(res.id, '/api/docs/' + res.id, [], []);
+  UploadedDoc = new Doc(res.id, '/api/docs/image/' + res.id, [], []);
   drawSelectSigners();
 };

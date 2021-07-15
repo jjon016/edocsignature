@@ -28,8 +28,8 @@ it('fetches the doc', async () => {
     .set('Cookie', userOne)
     .send()
     .expect(200);
-  expect(response.body[0].id).toEqual(docOneId);
-  expect(response.body[0].sigboxes[0].type == SigBoxType.Signature);
+  expect(response.body.docs[0].id).toEqual(docOneId);
+  expect(response.body.docs[0].sigboxes[0].type == SigBoxType.Signature);
 });
 
 it('throws not found if doc does not exists', async () => {
@@ -39,5 +39,5 @@ it('throws not found if doc does not exists', async () => {
     .set('Cookie', global.signin())
     .send()
     .expect(200);
-  expect(response.body).toEqual([]);
+  expect(response.body.docs).toEqual([]);
 });
