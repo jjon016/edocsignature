@@ -46,8 +46,6 @@ router.post(
       aDoc.sigboxes = sigboxes;
     }
 
-    console.log('saving changes');
-
     await aDoc.save();
 
     res.status(200).send({});

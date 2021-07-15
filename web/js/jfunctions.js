@@ -1,3 +1,4 @@
+var UserData = [];
 function get(someelement) {
   if (document.getElementById(someelement)) {
     return document.getElementById(someelement);
@@ -77,7 +78,6 @@ function showErrors(errors) {
   if (get('errors')) {
     let page =
       '<div class="alert alert-danger"><h5>Ooops ....</h5><ul class="my-0">';
-    console.log(errors);
     errors.map((err) => {
       if (err.message) {
         page += '<li>' + err.message + '</li>';
@@ -138,3 +138,35 @@ const verifyUser = async () => {
     }
   }
 };
+function drawHeader(apage) {
+  let page = '<nav class="navbar navbar-expand-md navbar-dark">';
+  page +=
+    '<a href="#" class="navbar-brand"><img src="images/eDOCLogo2.png" style="width: 50px" /></a>';
+  page +=
+    '<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">';
+  page += '<span class="navbar-toggler-icon"></span>';
+  page += '</button>';
+  page +=
+    '<div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">';
+  page += '<div class="navbar-nav text-white">';
+  page +=
+    '<a href="setup.html" target="_self" class="nav-item nav-link' +
+    (apage == 'setup' ? ' active' : '') +
+    '">Send Document</a>';
+  page +=
+    '<a href="setup.html" target="_self" class="nav-item nav-link' +
+    (apage == 'setup' ? ' active' : '') +
+    '">Manage Document</a>';
+  page +=
+    '<a href="profile.html" target="_self" class="nav-item nav-link' +
+    (apage == 'profile' ? ' active' : '') +
+    '">Settings</a>';
+  page += '</div>';
+  page += '<div class="navbar-nav">';
+  page +=
+    '<i class="btn fa fa-sign-out text-white" style="font-size: 40px" aria-hidden="true" onclick="doSignout()"></i>';
+  page += '</div>';
+  page += '</div>';
+  page += '</nav>';
+  get('header').innerHTML = page;
+}

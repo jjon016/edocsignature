@@ -26,14 +26,15 @@ export const cleanDirectories = () => {
 export const testValidDocObject = (
   docid?: string,
   ownerid?: string,
-  signerid?: string
+  signerid?: string,
+  docstatus?: DocStatus
 ) => {
   const theSignerID = signerid || mongoose.Types.ObjectId().toHexString();
   return {
     docname: 'Test Doc',
     _id: docid || mongoose.Types.ObjectId().toHexString(),
     ownerid: ownerid || mongoose.Types.ObjectId().toHexString(),
-    docstatus: DocStatus.Signing,
+    docstatus: docstatus || DocStatus.Signing,
     signers: [
       {
         email: 'test@test.com',

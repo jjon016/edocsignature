@@ -2,12 +2,12 @@ var RenderToTarget = null;
 var PDFDocInfo = null;
 var PDFCurrentPage = 0;
 var RenderViewPort = 3;
-var PDFJS = window['pdfjs-dist/build/pdf'];
-PDFJS.GlobalWorkerOptions.workerSrc = 'pdfjs-dist/build/pdf.worker.js';
-const loadPDFtoDiv = (targetel, pdffile) => {
+var PDFJS = null;
+var loadpdfcbfunction = '';
+const loadPDFtoDiv = async (targetel, pdffile) => {
   RenderToTarget = targetel;
   PDFCurrentPage = 0;
-  pdfjsLib.getDocument(pdffile).promise.then(function (pdfDoc) {
+  await pdfjsLib.getDocument(pdffile).promise.then(function (pdfDoc) {
     LoadDataFromPDF(pdfDoc);
   });
 };
@@ -47,6 +47,9 @@ function loadPDFPage(num) {
         PDFCurrentPage++;
         loadPDFPage(PDFCurrentPage);
       } else {
+        if (loadpdfcbfunction != '') {
+          eval(loadpdfcbfunction + '()');
+        }
       }
     });
   });

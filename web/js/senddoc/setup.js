@@ -1,4 +1,4 @@
-function drawSetup() {
+async function drawSetup() {
   get('MainCellCard').innerHTML = '';
   get('SigElBar').className = 'd-flex flex-row';
   var select = get('signersel');
@@ -10,7 +10,7 @@ function drawSetup() {
     opt.innerHTML = UploadedDoc.signers[i].email;
     select.appendChild(opt);
   }
-  loadPDFtoDiv('MainCellCard', UploadedDoc.pdf);
+  await loadPDFtoDiv('MainCellCard', UploadedDoc.pdf);
 }
 function CheckValidPercent(VALUE) {
   if (VALUE < 0) {

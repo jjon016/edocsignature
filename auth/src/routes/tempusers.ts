@@ -41,15 +41,12 @@ router.post(
       emails.map((eml: string) => {
         emaillist.push({ email: eml });
       });
-      try {
-        const newtempusers = await ManyTempUsers.insertMany(emaillist);
-        if (newtempusers) {
-          newtempusers.map((user: any) => {
-            users.push({ email: user.email, id: user.id });
-          });
-        }
-      } catch (error) {
-        console.log(error);
+
+      const newtempusers = await ManyTempUsers.insertMany(emaillist);
+      if (newtempusers) {
+        newtempusers.map((user: any) => {
+          users.push({ email: user.email, id: user.id });
+        });
       }
     }
 

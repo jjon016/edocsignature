@@ -24,52 +24,32 @@
     />
     <link rel="stylesheet" href="css/eDOCSignature.css" />
     <script src="js/jfunctions.js"></script>
+    <script src="pdf_js/build/pdf.js"></script>
+    <script src="js/pdfloader.js"></script>
     <script src="js/auth/signout.js"></script>
     <script src="js/landing/landing.js"></script>
     <script>
       window.onload = (event) => {
         verifyUser();
+        drawHeader();
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf_js/build/pdf.worker.js';
+        PDFJS = window['pdfjs-dist/build/pdf'];
+        PDFJS.GlobalWorkerOptions.workerSrc = 'pdf_js/build/pdf.worker.js';
         getDocsToSignList();
       };
     </script>
   </head>
   <body>
     <div>
-      <div class="container">
-        <nav class="navbar navbar-expand-md navbar-dark">
-          <a href="#" class="navbar-brand"
-            ><img src="images/eDOCLogo2.png" style="width: 50px"
-          /></a>
-          <button
-            type="button"
-            class="navbar-toggler"
-            data-toggle="collapse"
-            data-target="#navbarCollapse"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div
-            class="collapse navbar-collapse justify-content-between"
-            id="navbarCollapse"
-          >
-            <div class="navbar-nav text-white">
-              <a href="setup.html" target="_self" class="nav-item nav-link"
-                >Send Document</a
-              >
-              <a href="#" class="nav-item nav-link">Manage Document</a>
-              <a href="#" class="nav-item nav-link">Settings</a>
-            </div>
-            <div class="navbar-nav">
-              <i
-                class="btn fa fa-sign-out text-white"
-                style="font-size: 40px"
-                aria-hidden="true"
-                onclick="doSignout()"
-              ></i>
-            </div>
-          </div>
-        </nav>
+      <div class="container" id="header"></div>
+      <div
+        id="NavBar"
+        class="d-none"
+        style="right: 78px; position: fixed; top: 89px; z-index: 1"
+      >
+        <button class="btn btn-success btn-sm" onclick="GoToNextUnsignedBox();">
+          Next
+        </button>
       </div>
       <div class="container">
         <div class="row">

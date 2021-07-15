@@ -24,45 +24,19 @@
     />
     <link rel="stylesheet" href="css/eDOCSignature.css" />
     <script src="js/jfunctions.js"></script>
-    <script src="pdf_js/build/pdf.js"></script>
-    <script src="js/pdfloader.js"></script>
     <script src="js/auth/signout.js"></script>
-    <script src="js/senddoc/uploadnew.js"></script>
-    <script src="js/senddoc/setup.js"></script>
-    <script src="js/elements/elall.js"></script>
-    <script src="js/elements/sigel.js"></script>
-    <script src="js/senddoc/signers.js"></script>
-    <script src="js/docs.js"></script>
+    <script src="js/profile/profile.js"></script>
     <script>
       window.onload = (event) => {
         verifyUser();
-        drawHeader('setup');
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf_js/build/pdf.worker.js';
-        PDFJS = window['pdfjs-dist/build/pdf'];
-        PDFJS.GlobalWorkerOptions.workerSrc = 'pdf_js/build/pdf.worker.js';
-        drawUploadNew();
+        getMyData();
+        drawHeader('profile');
       };
     </script>
   </head>
   <body>
     <div>
       <div class="container" id="header"></div>
-      <div
-        id="SigElBar"
-        class="d-none"
-        style="right: 78px; position: fixed; top: 89px; z-index: 1"
-      >
-        <select name="signersel" id="signersel" class="form-control"></select>
-        <i
-          onclick="AddSignatureBoxToCanvas()"
-          id="AddSigBox"
-          class="btn fa fa fa-edit text-success"
-          style="font-size: 33px"
-        ></i>
-        <button class="btn btn-success btn-sm" onclick="SaveSendDoc();">
-          Send
-        </button>
-      </div>
       <div class="container">
         <div class="row">
           <div class="col glasspanel p-2">

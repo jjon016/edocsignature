@@ -13,31 +13,29 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
   queueGroupName = queueGroupName;
   async onMessage(data: UserUpdatedEvent['data'], msg: Message) {
     const { signature, signaturetype, initials, initialstype } = data;
-    const userversion = data.version;
-    const userid = data.id;
     let aSigner = null;
-    if (userversion == 0) {
-      //create new record
+    console.log(data);
+    if (data.version == 0) {
       aSigner = Signature.build({
-        userversion,
-        userid,
-        signature: signature || '',
-        signaturetype: signaturetype || FontTypes.AlluraRegular,
-        initials: initials || '',
-        initialstype: initialstype || FontTypes.AlluraRegular,
+        userid: data.id,
+        userversion: data.version,
+        signature: data.signature || '',
+        signaturetype: data.signaturetype || FontTypes.AlluraRegular,
+        initials: data.initials || '',
+        initialstype: data.initialstype || FontTypes.AlluraRegular,
       });
     } else {
       //record should exists lets update it
-      aSigner = await Signature.findOne({ userid });
-      if (!aSigner || aSigner.userversion != userversion - 1) {
+      aSigner = await Signature.findOne({ userid: data.id });
+      if (!aSigner || aSigner.userversion != data.version - 1) {
         throw new Error('Signature not found');
       }
       aSigner.set({
-        userversion,
-        signature: signature || '',
-        signaturetype: signaturetype || FontTypes.AlluraRegular,
-        initials: initials || '',
-        initialstype: initialstype || FontTypes.AlluraRegular,
+        userversion: data.version,
+        signature: data.signature || '',
+        signaturetype: data.signaturetype || FontTypes.AlluraRegular,
+        initials: data.initials || '',
+        initialstype: data.initialstype || FontTypes.AlluraRegular,
       });
     }
     await aSigner.save();

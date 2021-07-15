@@ -5,6 +5,8 @@ import { TempUser } from '../models/tempuser';
 import { BadRequestError, validateRequest } from '@edoccoding/common';
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
+import { natsWrapper } from '../nats-wrapper';
+import { UserUpdatedPublisher } from '../events/publisher/user-updated-publisher';
 
 const router = express.Router();
 
@@ -52,6 +54,8 @@ router.post(
 
     //Store it on session object
     req.session = { jwt: userJwt };
+
+    new UserUpdatedPublisher(natsWrapper.client).publish(user);
 
     res.status(201).send(user);
   }
