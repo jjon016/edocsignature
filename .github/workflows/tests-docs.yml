@@ -1,8 +1,9 @@
 name: tests-docs
 
 on:
-  pull_request
-  
+  pull_request:
+    - 'docs/**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
