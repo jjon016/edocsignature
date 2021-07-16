@@ -121,7 +121,6 @@ router.post(
       fontsize--;
     }
 
-    console.log('drawing text');
     try {
       page.drawText(sig.signature, {
         x: x,
