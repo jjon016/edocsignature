@@ -39,8 +39,6 @@ router.post(
       throw new BadRequestError('Document not found');
     }
 
-    console.log('looking up sig');
-
     const sig = await Signature.findOne({ userid: req.currentUser!.id });
 
     if (!sig) {
