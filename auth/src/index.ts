@@ -3,6 +3,7 @@ import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 
 const start = async () => {
+  console.log('starting up');
   if (!process.env.JWTKEY) {
     throw new Error('JWTKEY must be defined');
   }
