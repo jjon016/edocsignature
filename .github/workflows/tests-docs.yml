@@ -2,7 +2,8 @@ name: tests-docs
 
 on:
   pull_request:
-    - 'docs/**'
+    paths:
+      - 'docs/**'
 
 jobs:
   build:
