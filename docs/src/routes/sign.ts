@@ -33,18 +33,11 @@ router.post(
   async (req: Request, res: Response) => {
     let { id, sigbox } = req.body;
 
-    console.log(id);
-    console.log(sigbox);
-
     const doc = await Doc.findById(id);
-
-    console.log('found doc');
 
     if (!doc) {
       throw new BadRequestError('Document not found');
     }
-
-    console.log('looking up sig');
 
     const sig = await Signature.findOne({ userid: req.currentUser!.id });
 
@@ -129,14 +122,14 @@ router.post(
         font: customFont,
         color: rgb(0, 0, 0),
       });
-      page.drawRectangle({
+      /*page.drawRectangle({
         x: x,
         y: y,
         width: width,
         height: height,
         borderColor: rgb(1, 0, 0),
         borderWidth: 1.5,
-      });
+      });*/
     } catch (error) {
       throw new BadRequestError(error);
     }

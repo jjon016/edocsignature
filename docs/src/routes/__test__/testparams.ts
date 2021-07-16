@@ -34,7 +34,7 @@ export const buildDoc = async (docid?: string, ownerid?: string) => {
   return doc;
 };
 
-export const testUploadFile = path.join(__dirname, '\\test.pdf');
+export const testUploadFile = path.join(__dirname, 'test.pdf');
 
 export const cleanDirectories = async () => {
   const theDir = path.join(__dirname, '../signings');

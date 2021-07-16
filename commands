@@ -1,0 +1,4 @@
+//switch branch
+git checkout -b [dev]
+//push branch 
+git push origin dev

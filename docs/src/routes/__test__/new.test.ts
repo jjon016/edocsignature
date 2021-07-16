@@ -10,7 +10,10 @@ it('returns 201 on create', async () => {
     .post('/api/docs')
     .set('Cookie', global.signin())
     .field('JSON', JSON.stringify(testValidDocObject()))
-    .attach('FILE', testUploadFile)
+    .attach('FILE', testUploadFile, {
+      filename: 'test.pdf',
+      contentType: 'application/pdf',
+    })
     .expect(201);
 });
 
@@ -22,7 +25,10 @@ it('returns 400 on create if invalid coordinate is passed', async () => {
     .post('/api/docs')
     .set('Cookie', global.signin())
     .field('JSON', JSON.stringify(docdata))
-    .attach('FILE', testUploadFile)
+    .attach('FILE', testUploadFile, {
+      filename: 'test.pdf',
+      contentType: 'application/pdf',
+    })
     .expect(400);
 });
 
@@ -34,7 +40,10 @@ it('returns 400 on create if invalid signer data is passed', async () => {
     .post('/api/docs')
     .set('Cookie', global.signin())
     .field('JSON', JSON.stringify(docdata))
-    .attach('FILE', testUploadFile)
+    .attach('FILE', testUploadFile, {
+      filename: 'test.pdf',
+      contentType: 'application/pdf',
+    })
     .expect(400);
 });
 
@@ -48,7 +57,10 @@ it('returns 201 with minimal requirements', async () => {
         docname: 'Test Doc',
       })
     )
-    .attach('FILE', testUploadFile)
+    .attach('FILE', testUploadFile, {
+      filename: 'test.pdf',
+      contentType: 'application/pdf',
+    })
     .expect(201);
 });
 
