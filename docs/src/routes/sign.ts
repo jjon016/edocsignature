@@ -33,9 +33,6 @@ router.post(
   async (req: Request, res: Response) => {
     let { id, sigbox } = req.body;
 
-    console.log(id);
-    console.log(sigbox);
-
     const doc = await Doc.findById(id);
 
     console.log('found doc');
