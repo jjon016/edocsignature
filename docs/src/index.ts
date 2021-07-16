@@ -4,7 +4,6 @@ import { natsWrapper } from './nats-wrapper';
 import { UserUpdatedListener } from './events/listeners/user-updated-listener';
 
 const start = async () => {
-  console.log('Starting docs');
   if (!process.env.JWTKEY) {
     throw new Error('JWTKEY must be defined');
   }
