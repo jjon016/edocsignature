@@ -11,6 +11,8 @@ import { getDocData } from './routes/getdata';
 import { getDoc } from './routes/getdoc';
 import { updateDocRouter } from './routes/update';
 import { getDocsToSign } from './routes/getdocstosign';
+import { signRouter } from './routes/sign';
+import { certificateRouter } from './routes/cert';
 
 const app = express();
 app.set('trust proxy', true);
@@ -28,6 +30,8 @@ app.use(getDocData);
 app.use(getDoc);
 app.use(updateDocRouter);
 app.use(getDocsToSign);
+app.use(signRouter);
+app.use(certificateRouter);
 
 //attach routes to app
 app.use(newDocRouter);

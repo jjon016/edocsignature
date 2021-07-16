@@ -11,10 +11,19 @@ router.get(
   requireAuth,
   async (req: Request, res: Response) => {
     const theFile = path.join(__dirname, 'signings', req.params.docid + '.pdf');
+    const signedFile = path.join(
+      __dirname,
+      'signings',
+      req.params.docid + '_signed' + '.pdf'
+    );
     if (!fs.existsSync(theFile)) {
       throw new NotFoundError();
     }
-    res.download(theFile);
+    if (fs.existsSync(signedFile)) {
+      res.download(signedFile);
+    } else {
+      res.download(theFile);
+    }
   }
 );
 

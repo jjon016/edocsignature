@@ -15,7 +15,7 @@ router.get(
     } catch {
       throw new NotFoundError();
     }
-
+    console.log(doc);
     res.send(doc);
   }
 );

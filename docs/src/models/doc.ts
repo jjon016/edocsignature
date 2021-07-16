@@ -27,6 +27,7 @@ export interface SignerDoc {
 }
 
 export interface SigBoxDoc {
+  _id: string;
   x: number;
   y: number;
   width: number;

@@ -12,7 +12,7 @@ const LoadDocForSigning = async (ind) => {
   await loadPDFtoDiv('MainCellCard', UploadedDoc.pdf);
   loadpdfcbfunction = 'drawBoxestoSign';
 };
-function clickBox(e) {
+async function clickBox(e) {
   let hasBoxToSign = false;
   let date = new Date();
   for (let i = 0; i < UploadedDoc.sigboxes.length; i++) {
@@ -28,10 +28,47 @@ function clickBox(e) {
     ) {
       hasBoxToSign = true;
     }
+    res = await postData('/api/docs/sign/', {
+      id: UploadedDoc.id,
+      sigbox: UploadedDoc.sigboxes[i],
+    });
+    if (res.errors) {
+      console.log(res.errors);
+      return;
+    } else {
+      console.log('box signed');
+    }
   }
   if (!hasBoxToSign) {
     get('SigNav').innerHTML = 'Finish';
     console.log(UploadedDoc);
+    res = await postData('/api/docs/cert/', { id: UploadedDoc.id });
+    if (res.errors) {
+      console.log(res.errors);
+    } else {
+      console.log('cert applied');
+    }
+  }
+}
+function GoToNextUnsignedBox() {
+  if (get('SigNav').innerHTML == 'Finish') {
+    window.open('/api/docs/image/' + UploadedDoc.id);
+  } else {
+    for (let i = 0; i < UploadedDoc.sigboxes.length; i++) {
+      let box = UploadedDoc.sigboxes[i];
+      if (box.signerid != UserData.id) {
+        continue;
+      }
+      if (box.clickedon) {
+        continue;
+      }
+      element = get('SigBox' + i.toString());
+      element.scrollIntoView({
+        behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest',
+      });
+    }
   }
 }
 function drawBoxestoSign() {

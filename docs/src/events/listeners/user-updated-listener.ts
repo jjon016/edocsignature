@@ -14,15 +14,17 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
   async onMessage(data: UserUpdatedEvent['data'], msg: Message) {
     let aSigner = null;
     if (data.version == 0) {
+      console.log(data);
       aSigner = Signature.build({
         userid: data.id,
         userversion: data.version,
-        signature: data.signature,
+        signature: data.name,
         signaturetype: data.signaturetype,
         initials: data.initials,
         initialstype: data.initialstype,
       });
     } else {
+      console.log(data);
       //record should exists lets update it
       aSigner = await Signature.findOne({ userid: data.id });
       if (!aSigner || aSigner.userversion != data.version - 1) {
@@ -30,7 +32,7 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
       }
       aSigner.set({
         userversion: data.version,
-        signature: data.signature,
+        signature: data.name,
         signaturetype: data.signaturetype || FontTypes.AlluraRegular,
         initials: data.initials,
         initialstype: data.initialstype || FontTypes.AlluraRegular,

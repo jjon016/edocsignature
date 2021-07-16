@@ -50,7 +50,7 @@ it('finds, updates, and saves a sig', async () => {
 
   const updatedSig = await Signature.findById(sig.id);
 
-  expect(updatedSig!.signature).toEqual(data.signature);
+  expect(updatedSig!.signature).toEqual(data.name);
   expect(updatedSig!.signaturetype).toEqual(data.signaturetype);
   expect(updatedSig!.userversion).toEqual(data.version);
   expect(updatedSig!.initials).toEqual(data.initials);
