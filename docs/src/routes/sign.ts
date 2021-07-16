@@ -35,8 +35,6 @@ router.post(
 
     const doc = await Doc.findById(id);
 
-    console.log('found doc');
-
     if (!doc) {
       throw new BadRequestError('Document not found');
     }
