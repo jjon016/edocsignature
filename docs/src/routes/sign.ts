@@ -130,14 +130,14 @@ router.post(
         font: customFont,
         color: rgb(0, 0, 0),
       });
-      page.drawRectangle({
+      /*page.drawRectangle({
         x: x,
         y: y,
         width: width,
         height: height,
         borderColor: rgb(1, 0, 0),
         borderWidth: 1.5,
-      });
+      });*/
     } catch (error) {
       throw new BadRequestError(error);
     }
