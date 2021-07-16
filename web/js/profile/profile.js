@@ -19,21 +19,21 @@ function drawProfilePage() {
   page += '<label>Full Name</label>';
   page +=
     '<input type="text" id="Name" value="' +
-    UserData.name +
+    (UserData.name || '') +
     '" class="form-control" />';
   page += '</div>';
   page += '<div class="form-group">';
   page += '<label>Initials</label>';
   page +=
     '<input type="text" value="' +
-    UserData.initials +
+    (UserData.initials || '') +
     '" id="Initials" class="form-control" />';
   page += '</div>';
   page += '<div class="form-group">';
   page += '<label>Mobile Phone</label>';
   page +=
     '<input type="text" id="Phone" value="' +
-    UserData.phone +
+    (UserData.phone || '') +
     '" class="form-control" />';
   page += '</div>';
   page += '<div class="form-group">';
@@ -44,6 +44,9 @@ function drawProfilePage() {
   page += '</div>';
   page += '</div>';
   get('MainCellCard').innerHTML = page;
+  setTimeout(() => {
+    get('Password').value = '';
+  }, 100);
 }
 function drawAdpotSig() {
   let page = '<div class="FontSelector mt-3">';

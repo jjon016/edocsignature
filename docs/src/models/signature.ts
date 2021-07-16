@@ -3,10 +3,10 @@ import { FontTypes } from '@edoccoding/common';
 
 export interface SignatureAttrs {
   userid: string;
-  signaturetype: FontTypes;
-  signature: string;
-  initialstype: FontTypes;
-  initials: string;
+  signaturetype?: FontTypes;
+  signature?: string;
+  initialstype?: FontTypes;
+  initials?: string;
   userversion: number;
 }
 
@@ -37,7 +37,7 @@ const SignatureSchema = new mongoose.Schema(
     },
     signature: {
       type: String,
-      required: true,
+      required: false,
     },
     initialstype: {
       type: String,
@@ -47,7 +47,7 @@ const SignatureSchema = new mongoose.Schema(
     },
     initials: {
       type: String,
-      required: true,
+      required: false,
     },
     userversion: {
       type: Number,

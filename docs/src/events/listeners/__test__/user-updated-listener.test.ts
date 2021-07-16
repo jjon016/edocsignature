@@ -56,3 +56,25 @@ it('finds, updates, and saves a sig', async () => {
   expect(updatedSig!.initials).toEqual(data.initials);
   expect(updatedSig!.initialstype).toEqual(data.initialstype);
 });
+
+it('can create a signer with minimal info', async () => {
+  let userid = mongoose.Types.ObjectId().toHexString();
+  const data: UserUpdatedEvent['data'] = {
+    id: userid,
+    version: 0,
+    email: 'test@test.com',
+  };
+  const listener = new UserUpdatedListener(natsWrapper.client);
+
+  //@ts-ignore
+  const msg: Message = {
+    ack: jest.fn(),
+  };
+
+  await listener.onMessage(data, msg);
+
+  const updatedSig = await Signature.findOne({ userid: userid });
+
+  expect(updatedSig!.userid).toEqual(userid);
+  expect(updatedSig!.userversion).toEqual(data.version);
+});

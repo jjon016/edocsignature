@@ -12,17 +12,15 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
   subject: Subjects.UserUpdated = Subjects.UserUpdated;
   queueGroupName = queueGroupName;
   async onMessage(data: UserUpdatedEvent['data'], msg: Message) {
-    const { signature, signaturetype, initials, initialstype } = data;
     let aSigner = null;
-    console.log(data);
     if (data.version == 0) {
       aSigner = Signature.build({
         userid: data.id,
         userversion: data.version,
-        signature: data.signature || '',
-        signaturetype: data.signaturetype || FontTypes.AlluraRegular,
-        initials: data.initials || '',
-        initialstype: data.initialstype || FontTypes.AlluraRegular,
+        signature: data.signature,
+        signaturetype: data.signaturetype,
+        initials: data.initials,
+        initialstype: data.initialstype,
       });
     } else {
       //record should exists lets update it
@@ -32,9 +30,9 @@ export class UserUpdatedListener extends Listener<UserUpdatedEvent> {
       }
       aSigner.set({
         userversion: data.version,
-        signature: data.signature || '',
+        signature: data.signature,
         signaturetype: data.signaturetype || FontTypes.AlluraRegular,
-        initials: data.initials || '',
+        initials: data.initials,
         initialstype: data.initialstype || FontTypes.AlluraRegular,
       });
     }

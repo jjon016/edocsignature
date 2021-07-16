@@ -28,6 +28,7 @@
     <script src="js/pdfloader.js"></script>
     <script src="js/auth/signout.js"></script>
     <script src="js/landing/landing.js"></script>
+    <script src="js/signdoc/signdoc.js"></script>
     <script>
       window.onload = (event) => {
         verifyUser();
@@ -35,7 +36,7 @@
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'pdf_js/build/pdf.worker.js';
         PDFJS = window['pdfjs-dist/build/pdf'];
         PDFJS.GlobalWorkerOptions.workerSrc = 'pdf_js/build/pdf.worker.js';
-        getDocsToSignList();
+        checkSigCreated();
       };
     </script>
   </head>
@@ -47,7 +48,11 @@
         class="d-none"
         style="right: 78px; position: fixed; top: 89px; z-index: 1"
       >
-        <button class="btn btn-success btn-sm" onclick="GoToNextUnsignedBox();">
+        <button
+          class="btn btn-success btn-sm"
+          id="SigNav"
+          onclick="GoToNextUnsignedBox();"
+        >
           Next
         </button>
       </div>

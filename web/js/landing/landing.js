@@ -1,8 +1,16 @@
 var docsToSign = [];
-var imageSizes = [];
-function setimageSizes() {
-  for (let i = 0; i < UploadedDoc.pages; i++) {
-    imageSizes.push(getDim('canvas' + i.toString()));
+async function checkSigCreated() {
+  res = await getData('/api/users/mydata');
+  if (res.errors) {
+    console.log(res.errors);
+    showNeedData();
+    return;
+  }
+  UserData = res;
+  if (!UserData.name || UserData.name == '') {
+    showNeedData();
+  } else {
+    await getDocsToSignList();
   }
 }
 const getDocsToSignList = async () => {
@@ -24,8 +32,28 @@ function showWelcome() {
   page += '<div class="row text-center mt-2">';
   page += '<h3>Welcome</h3>';
   page +=
-    '<p>You currently have no documents to sign. You can send a document for signing by clicking on the "Send Document" menu item. The "Manage Documents" menu item, allows you to review and see the current status of documents. If you would like to change your settings click the "Settings" menu item.</p>';
+    '<p>You currently have no documents to sign. ' +
+    'You can send a document for signing by clicking on the "Send Document" menu item. ' +
+    'The "Manage Documents" menu item, allows you to review and see the current status of documents. ' +
+    'If you would like to change your settings click the "Settings" menu item.</p>';
   page += '<p>Thanks for using eDOCSignature!</p>';
+  page += '</div>';
+  page += '</div>';
+  get('MainCellCard').innerHTML = page;
+}
+function showNeedData() {
+  let page = '<div class="container mt-3">';
+  page += '<div class="row" style="max-width: 50%; margin: auto">';
+  page += '<h4>Thanks for signing up for eDOCSignature!</h4>';
+  page +=
+    '<p style="margin-bottom: 0px">The first step for you to sign any document is to provide some information about yourself and adopt a signature. ' +
+    'You can do that now by click the button below.</p>';
+  page += '<div class="mb-3" style="text-align: center">';
+  page +=
+    '<button class="btn btn-success" onclick=\'window.open("profile.html","_self")\'>Get Started</button>';
+  page += '</div>';
+  page +=
+    '<p>If you would like to send a document out for signing instead, you can do that by clicking on the "Send Document" menu item.</p>';
   page += '</div>';
   page += '</div>';
   get('MainCellCard').innerHTML = page;
@@ -45,42 +73,4 @@ function showDocList() {
   }
   page += '</div>';
   get('MainCellCard').innerHTML = page;
-}
-const LoadDocForSigning = async (ind) => {
-  get('MainCellCard').innerHTML = '';
-  get('NavBar').className = 'd-flex flex-row';
-  UploadedDoc = DeepCopy(docsToSign[ind]);
-  UploadedDoc.pdf = '/api/docs/image/' + UploadedDoc.id;
-  await loadPDFtoDiv('MainCellCard', UploadedDoc.pdf);
-  loadpdfcbfunction = 'drawBoxestoSign';
-};
-function drawBoxestoSign() {
-  setimageSizes();
-  for (let i = 0; i < UploadedDoc.sigboxes.length; i++) {
-    let box = UploadedDoc.sigboxes[i];
-    var elemDiv = document.createElement('div');
-    elemDiv.id = 'SigBox' + i.toString();
-    elemDiv.className = 'border border-success rounded position-absolute';
-    elemDiv.title = 'Required';
-    elemDiv.innerHTML =
-      '<span style="position:absolute;top:0px;left:0px;">Tap To Sign</span>';
-    elemDiv.style.background = 'rgb(211, 253, 245)';
-    elemDiv.style.fontSize = box.fontsize.toString() + 'px';
-    elemDiv.style.lineHeight = elemDiv.style.fontSize;
-    elemDiv.style.left =
-      ((parseFloat(box.x) * imageSizes[box.page].width) / 100).toString() +
-      'px';
-    elemDiv.style.top =
-      ((parseFloat(box.y) * imageSizes[box.page].height) / 100).toString() +
-      'px';
-    elemDiv.style.width =
-      ((parseFloat(box.width) * imageSizes[box.page].width) / 100).toString() +
-      'px';
-    elemDiv.style.height =
-      (
-        (parseFloat(box.height) * imageSizes[box.page].height) /
-        100
-      ).toString() + 'px';
-    document.getElementById(RenderToTarget).appendChild(elemDiv);
-  }
 }
