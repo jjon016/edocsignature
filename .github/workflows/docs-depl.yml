@@ -33,7 +33,7 @@ jobs:
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
         
-    - run: cd auth && docker build -t us.gcr.io/theta-cell-315515/docs .
+    - run: cd docs && docker build -t us.gcr.io/theta-cell-315515/docs .
     
     - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       env:
