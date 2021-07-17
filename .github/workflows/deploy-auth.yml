@@ -3,7 +3,7 @@ name: deploy-auth
 on:
   push:
     branches: 
-      - test
+      - main
     paths:
       - 'auth/**'
 
@@ -19,13 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - run: cd auth && docker build -t fadeleafj/auth .
-    - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-    - run: docker push fadeleafj/auth    
-    
+            
     # Setup gcloud CLI
     - uses: google-github-actions/setup-gcloud@master
       with:
@@ -40,5 +34,13 @@ jobs:
     # Get the GKE credentials so we can deploy to the cluster
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
+        
+    - run: cd auth && docker build -t us.gcr.io/theta-cell-315515/auth .
+    
+    - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    - run: docker push us.gcr.io/theta-cell-315515/auth  
         
     - run: kubectl rollout restart deployment auth-depl
