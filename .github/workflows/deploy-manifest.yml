@@ -3,16 +3,14 @@ name: deploy-manifests
 on:
   push:
     branches: 
-      - test
+      - main
     paths:
-      - 'infra/**'
+      - 'infra/k8s-prod/**'
 
 env:
   PROJECT_ID: ${{ secrets.GKE_PROJECT }}
   GKE_CLUSTER: ${{ secrets.GKE_CLUSTER }}
   GKE_ZONE: ${{ secrets.GKE_ZONE }}
-  DEPLOYMENT_NAME: auth-depl
-  IMAGE: static-site
 
 jobs:
   build:
@@ -31,4 +29,4 @@ jobs:
     - run: |-
         gcloud container clusters get-credentials "$GKE_CLUSTER" --zone "$GKE_ZONE"
         
-    - run: kubectl apply -f infra/k8s && kubectl apply -f infra/k8s-prod
+    - run: kubectl apply -f infra/k8s-prod
