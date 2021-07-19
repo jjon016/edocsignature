@@ -2,3 +2,14 @@
 git checkout -b [dev]
 //push branch 
 git push origin dev
+
+
+
+//configure gcloud by installing gcloud and then typing 
+gcloud init
+//enter project id and region  then create context to the cluster using
+gcloud container clusters get-credentials <cluster name>
+
+//go to google cloud - network services and click on load balancing
+//click on the load balancer listed to find the IP to enter into your host file
+
