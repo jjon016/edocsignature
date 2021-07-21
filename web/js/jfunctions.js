@@ -154,8 +154,8 @@ function drawHeader(apage) {
     (apage == 'setup' ? ' active' : '') +
     '">Send Document</a>';
   page +=
-    '<a href="setup.html" target="_self" class="nav-item nav-link' +
-    (apage == 'setup' ? ' active' : '') +
+    '<a href="manage.html" target="_self" class="nav-item nav-link' +
+    (apage == 'manage' ? ' active' : '') +
     '">Manage Document</a>';
   page +=
     '<a href="profile.html" target="_self" class="nav-item nav-link' +

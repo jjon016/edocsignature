@@ -29,7 +29,6 @@ router.post(
       id + '_signed' + '.pdf'
     );
 
-    //create signed file if it doesn't exists
     if (!fs.existsSync(signedFile)) {
       console.log('signed file not found');
       throw new NotFoundError();
@@ -38,18 +37,15 @@ router.post(
     //sign completed doc
     console.log(signedFile);
     console.log(certfile);
-    try {
-      const signObj = new signer.SignPdf();
-      const signedPDF = signObj.sign(
-        fs.readFileSync(signedFile),
-        fs.readFileSync(certfile),
-        {
-          passphrase: '2020',
-        }
-      );
-    } catch (error) {
-      throw new BadRequestError(error);
-    }
+    const p12Buffer = fs.readFileSync(certfile);
+    const pdfBuffer = fs.readFileSync(signedFile);
+
+    const signObj = new signer.SignPdf();
+    const signedPDFBuffer = signObj.sign(pdfBuffer, p12Buffer, {
+      passphrase: '2020',
+    });
+
+    fs.writeFileSync(signedFile, signedPDFBuffer);
 
     console.log('done applying cert');
 

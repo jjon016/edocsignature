@@ -21,22 +21,22 @@ async function clickBox(e) {
       e.target.className = UserData.signaturetype + ' position-absolute';
       e.target.style.fontSize = UserData.fontSize + 'px';
       UploadedDoc.sigboxes[i].clickedon = Date.parse(date);
+      res = await postData('/api/docs/sign/', {
+        id: UploadedDoc.id,
+        sigbox: UploadedDoc.sigboxes[i],
+      });
+      if (res.errors) {
+        console.log(res.errors);
+        return;
+      } else {
+        console.log('box signed');
+      }
     }
     if (
       !UploadedDoc.sigboxes[i].clickedon ||
       UploadedDoc.sigboxes[i].clickedon == ''
     ) {
       hasBoxToSign = true;
-    }
-    res = await postData('/api/docs/sign/', {
-      id: UploadedDoc.id,
-      sigbox: UploadedDoc.sigboxes[i],
-    });
-    if (res.errors) {
-      console.log(res.errors);
-      return;
-    } else {
-      console.log('box signed');
     }
   }
   if (!hasBoxToSign) {
