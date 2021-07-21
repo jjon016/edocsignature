@@ -11,8 +11,10 @@ import { getDocData } from './routes/getdata';
 import { getDoc } from './routes/getdoc';
 import { updateDocRouter } from './routes/update';
 import { getDocsToSign } from './routes/getdocstosign';
+import { getSignerDocs } from './routes/getsignerdocs';
 import { signRouter } from './routes/sign';
 import { certificateRouter } from './routes/cert';
+import { deleteDocRouter } from './routes/delete';
 
 const app = express();
 app.set('trust proxy', true);
@@ -26,10 +28,12 @@ app.use(
   })
 );
 app.use(currentUser);
+app.use(deleteDocRouter);
 app.use(getDocData);
 app.use(getDoc);
 app.use(updateDocRouter);
 app.use(getDocsToSign);
+app.use(getSignerDocs);
 app.use(signRouter);
 app.use(certificateRouter);
 

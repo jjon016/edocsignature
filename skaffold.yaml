@@ -3,12 +3,12 @@ kind: Config
 deploy:
   kubectl:
     manifests:
-      - ./infra/k8s-prod/*
+      - ./infra/k8s-dev/*
 build:
-  googleCloudBuild:
-    projectId: theta-cell-315515
+  local:
+    push: false
   artifacts:
-    - image: us.gcr.io/theta-cell-315515/auth
+    - image: fadeleafj/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -16,7 +16,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/theta-cell-315515/docs
+    - image: fadeleafj/docs
       context: docs
       docker:
         dockerfile: Dockerfile
@@ -24,7 +24,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: us.gcr.io/theta-cell-315515/web
+    - image: fadeleafj/web
       context: web
       docker:
         dockerfile: Dockerfile
