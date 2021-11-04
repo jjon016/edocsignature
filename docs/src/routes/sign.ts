@@ -130,7 +130,7 @@ router.post(
         borderColor: rgb(1, 0, 0),
         borderWidth: 1.5,
       });*/
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error);
     }
 
@@ -195,7 +195,7 @@ router.post(
         signedFile,
         await thepdf.save({ useObjectStreams: false })
       );
-    } catch (error) {
+    } catch (error: any) {
       throw new BadRequestError(error);
     }
     console.log('saved signed file');
